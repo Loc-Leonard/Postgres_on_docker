@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  db:
+    build: .
+    container_name: dbforsite-postgres
+    restart: unless-stopped
+
+    # Подключаем .env целиком (лежит рядом с compose; .env НЕ коммитим)
+    env_file:
+      - .env
+
+    environment:
+      TZ: UTC
+      # Зафиксируем initdb (кодировка/локаль) для первого запуска пустого тома
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+
+    ports:
+      - "127.0.0.1:5433:5432"
+
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d:ro
+      - ./backups:/backups
+
+    # Чуть больше shm на всякий
+    shm_size: "256m"
+
+    # Проверка готовности БД
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-postgres} -h 127.0.0.1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+volumes:
+  pgdata:

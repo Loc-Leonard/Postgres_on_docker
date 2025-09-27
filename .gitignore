@@ -1,0 +1,30 @@
+# Secrets / env
+.env
+
+# Docker volumes (если вдруг кто-то смонтирует bind вместо named)
+pgdata/
+data/
+volumes/
+
+# Backups / dumps / logs
+backups/
+*.dump
+*.sql
+log/
+logs/
+
+# OS / IDE junk
+.DS_Store
+Thumbs.db
+
+# VS Code / JetBrains
+.vscode/
+*.code-workspace
+.idea/
+*.iml
+
+# Node / Python (если рядом будут скрипты)
+node_modules/
+dist/
+__pycache__/
+*.pyc

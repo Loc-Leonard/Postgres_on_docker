@@ -1,0 +1,15 @@
+# По умолчанию нормализуем текст в репо (LF), а в рабочей копии — как система решит
+* text=auto
+
+# Unix-файлы (должны быть LF как в репо, так и в рабочей копии)
+*.sh           text eol=lf
+*.yml          text eol=lf
+*.yaml         text eol=lf
+Dockerfile     text eol=lf
+*.sql          text eol=lf
+*.md           text eol=lf
+*.env.example  text eol=lf
+
+# Windows-скрипты (разрешаем CRLF в рабочей копии)
+*.ps1          text eol=crlf
+*.bat          text eol=crlf
